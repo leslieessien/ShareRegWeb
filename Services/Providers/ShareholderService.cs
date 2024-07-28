@@ -26,7 +26,7 @@ namespace ShareRegWeb.Services.Providers
             var tinParam = new SqlParameter("@Tin", shareHolder.Tin);
             var idNoParam = new SqlParameter("@IdNumber", shareHolder.IdNumber);
 
-            var results = await _dbContext.Database.ExecuteSqlRawAsync("EXEC spNewShareholderInsert @City,@PhoneNumber,@Address",);
+            var results = await _dbContext.Database.ExecuteSqlRawAsync("EXEC spNewShareholderInsert @City,@PhoneNumber,@Address", idNoParam);
         }
 
         public Task GetAllShareholder()
