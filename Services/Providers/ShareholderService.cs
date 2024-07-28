@@ -22,7 +22,9 @@ namespace ShareRegWeb.Services.Providers
             var emailParam = new SqlParameter("@Email", shareHolder.Email);
             var digitalAddressParam = new SqlParameter("@Address", shareHolder.Address);
             var phoneNumberParam = new SqlParameter("@PhoneNumber",shareHolder.PhoneNumber);
-            var AddressParam = new SqlParameter("@City", shareHolder.Address);
+            var addressParam = new SqlParameter("@City", shareHolder.Address);
+            var tinParam = new SqlParameter("@Tin", shareHolder.Tin);
+            var idNoParam = new SqlParameter("@IdNumber", shareHolder.IdNumber);
 
             var results = await _dbContext.Database.ExecuteSqlRawAsync("EXEC spNewShareholderInsert @City,@PhoneNumber,@Address",);
         }
