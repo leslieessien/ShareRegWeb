@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using ShareRegWeb.Data;
 using ShareRegWeb.Models;
+using ShareRegWeb.Services.Interfaces;
+using ShareRegWeb.Services.Providers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +24,7 @@ builder.Services.AddIdentity<ApplicationUser,IdentityRole>(
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<IShareholder, ShareholderService>();
 
 var app = builder.Build();
 
