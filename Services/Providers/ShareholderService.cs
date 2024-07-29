@@ -3,30 +3,27 @@ using Microsoft.EntityFrameworkCore;
 using ShareRegWeb.Data;
 using ShareRegWeb.Models;
 using ShareRegWeb.Services.Interfaces;
+using System.Net;
 
 namespace ShareRegWeb.Services.Providers
 {
 
-    public class ShareholderService : IShareholder
+    public class ShareholderService(ApplicationDbContext dbContext) : IShareholder
     {
-        private readonly ApplicationDbContext _dbContext;
-        public ShareholderService(ApplicationDbContext dbContext)
-        {
-            _dbContext = dbContext;
-        }
-        public async Task AddShareholder(ShareHolderDto shareHolder)
+        public async Task<bool> AddShareholder(ShareHolderDto shareHolder)
         {
             var nameParam = new SqlParameter("@Name", shareHolder.Name);
             var genderParam = new SqlParameter("@Gender", shareHolder.Gender);
             var nationalityParam = new SqlParameter("@Nationality", shareHolder.Nationality);
             var emailParam = new SqlParameter("@Email", shareHolder.Email);
-            var digitalAddressParam = new SqlParameter("@Address", shareHolder.Address);
+            var digitalAddressParam = new SqlParameter("@DigitalAddress", shareHolder.Address);
             var phoneNumberParam = new SqlParameter("@PhoneNumber",shareHolder.PhoneNumber);
-            var addressParam = new SqlParameter("@City", shareHolder.Address);
+            var addressParam = new SqlParameter("@Address", shareHolder.Address);
             var tinParam = new SqlParameter("@Tin", shareHolder.Tin);
             var idNoParam = new SqlParameter("@IdNumber", shareHolder.IdNumber);
-
-            var results = await _dbContext.Database.ExecuteSqlRawAsync("EXEC spNewShareholderInsert @City,@PhoneNumber,@Address", idNoParam);
+            var results = await dbContext.Database.ExecuteSqlRawAsync("EXEC spNewShareholderInsert @Name,@Gender,@Nationality,@Email,@DigitalAddress,@PhoneNumber,@Tin,@IdNumber",
+                nameParam, genderParam, nationalityParam, emailParam, digitalAddressParam, phoneNumberParam, addressParam, tinParam, idNoParam, idNoParam);
+            return results > 0;
         }
 
         public Task GetAllShareholder()

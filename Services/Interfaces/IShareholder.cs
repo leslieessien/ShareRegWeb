@@ -4,7 +4,7 @@ namespace ShareRegWeb.Services.Interfaces
 {
     public interface IShareholder
     {
-        public Task AddShareholder(ShareHolderDto shareHolder);
+        public Task<bool> AddShareholder(ShareHolderDto shareHolder);
 
         public Task GetShareholder(string id);
 
